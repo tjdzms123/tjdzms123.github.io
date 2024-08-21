@@ -115,8 +115,8 @@ analytics:
 author:
   name             : "김성근"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "프로가 되고 싶은 신입 프론트엔드  개발자"
-  location         : "서울"
+  bio              : " 프로가 되고 싶은 신입 프론트엔드 개발자"
+  location         : "seoul"
   email            : 'tjdzms123@naver.com'
   links:
     - label: "Email"

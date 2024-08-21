@@ -113,11 +113,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "김성근"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  bio              : "프로가 되고 싶은 신입 프론트엔드 개발자"
+  location         : "서울"
+  email            : 'tjdzms123@naver.com'
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -133,7 +133,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      url: "https://github.com/tjdzms123"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"

@@ -3,7 +3,7 @@ main:
   - title: "Quick-Start Guide"
     url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "TIL"
-    url: https://tjdzms123.github.io/today-i-learn/
+    url: /today-i-learn/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"

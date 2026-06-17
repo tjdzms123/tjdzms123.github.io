@@ -2,8 +2,14 @@
 main:
   # - title: "Quick-Start Guide"
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "TIL"
-    url: /today-i-learn/
+  - title: "공통"
+    url: /common/
+  - title: "JavaScript"
+    url: /js/
+  - title: "C#"
+    url: /csharp/
+  - title: "SQL"
+    url: /sql/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"

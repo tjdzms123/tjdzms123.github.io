@@ -2,8 +2,8 @@
 main:
   # - title: "Quick-Start Guide"
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "공통"
-    url: /common/
+  - title: "CS"
+    url: /cs/
   - title: "JavaScript"
     url: /js/
   - title: "C#"

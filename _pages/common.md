@@ -1,11 +1,11 @@
 ---
-title: "공통"
+title: "CS"
 layout: archive
-permalink: /common/
+permalink: /cs/
 author_profile: true
 ---
 
-{% assign posts = site.posts | where_exp: "post", "post.categories contains '공통'" %}
+{% assign posts = site.posts | where_exp: "post", "post.categories contains 'CS'" %}
 {% if posts.size == 0 %}
   <p>아직 작성된 글이 없습니다.</p>
 {% else %}

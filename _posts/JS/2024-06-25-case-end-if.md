@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "MSSQL CASE ~ END 활용"
-categories: [SQL]
+title: "MSSQL case, end 문(if문) 활용"
+categories: [JS]
 date: 2024-06-25
 ---
 

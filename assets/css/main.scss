@@ -7,3 +7,86 @@ search: false
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+// 헤더 중앙 검색창
+#site-nav.greedy-nav {
+  position: relative; // 검색창 절대 위치 기준
+}
+
+.masthead__search {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5em; // 아이콘과 입력창 간격
+  margin: 0; // 기본 form 여백 제거
+  padding: 0; // 기본 form 패딩 제거
+  background-color: transparent; // 기본 form 배경 박스 제거
+
+  // 좁은 화면에선 중앙 고정 해제 (제목과 겹치지 않게)
+  @include breakpoint(max-width $small) {
+    position: static;
+    transform: none;
+    margin-inline-start: auto;
+  }
+}
+
+.masthead__search-icon {
+  font-size: 0.9em;
+  color: $muted-text-color;
+  pointer-events: none;
+}
+
+.masthead__search-input {
+  width: 300px;
+  max-width: 40vw;
+  margin-bottom: 0; // 기본 input 하단 여백 제거
+  padding: 0.45em 0.75em;
+  font-size: 0.8em;
+  color: $text-color;
+  background-color: transparent; // 배경 제거
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: none; // 기본 input 그림자 박스 제거
+  outline: none;
+
+  &:focus {
+    border-color: $primary-color;
+  }
+
+  &::placeholder {
+    color: $muted-text-color;
+  }
+}
+
+// 각 그리드가 자신의 float을 가두도록 clearfix
+.entries-grid {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// 섹션 제목은 항상 이전 그리드 아래에서 시작
+.archive__subtitle {
+  clear: both;
+}
+
+// 그리드 아이템 제목 2줄 이상 말줄임
+.entries-grid .archive__item-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 그리드 아이템 본문 3줄 이상 말줄임
+.entries-grid .archive__item-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

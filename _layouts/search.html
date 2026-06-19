@@ -26,8 +26,25 @@ layout: default
     {%- assign search_provider = site.search_provider | default: "lunr" -%}
     {%- case search_provider -%}
       {%- when "lunr" -%}
-        <input type="text" id="search" class="search-input" placeholder="{{ site.data.ui-text[locale].search_placeholder_text | default: 'Enter your search term...' }}" />
+        <input type="text" id="search" class="search-input" placeholder="검색" />
         <div id="results" class="results"></div>
+        <script>
+          // URL의 ?q= 값을 읽어 검색창에 채우고 검색을 자동 실행
+          window.addEventListener("load", function () {
+            var q = new URLSearchParams(window.location.search).get("q");
+            if (q) {
+              var headerInput = document.getElementById("masthead-search");
+              if (headerInput) { headerInput.value = q; }
+              var input = document.getElementById("search");
+              input.value = q;
+              if (window.jQuery) {
+                jQuery(input).trigger("keyup");
+              } else {
+                input.dispatchEvent(new Event("keyup"));
+              }
+            }
+          });
+        </script>
       {%- when "google" -%}
         <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
         <input type="text" id="cse-search-input-box-id" class="search-input" placeholder="{{ site.data.ui-text[locale].search_placeholder_text | default: 'Enter your search term...' }}" />

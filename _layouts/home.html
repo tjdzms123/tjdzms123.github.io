@@ -5,17 +5,23 @@ layout: archive
 
 {{ content }}
 
-<h3 class="archive__subtitle">{{ site.data.ui-text[locale].recent_posts | default: "Recent Posts" }}</h3>
-
-{% if paginator %}
-  {% assign posts = paginator.posts %}
-{% else %}
-  {% assign posts = site.posts %}
-{% endif %}
-
-{% assign entries_layout = page.entries_layout | default: 'list' %}
-<div class="entries-{{ entries_layout }}">
-  {% include documents-collection.html locale=locale entries=posts type=entries_layout %}
+<h3 class="archive__subtitle">최신글</h3>
+<div class="entries-grid">
+  {% for post in site.posts limit:6 %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
 </div>
 
-{% include paginator.html locale=locale %}
+{% for category in site.data.categories %}
+  {% assign cat_posts = site.categories[category.slug] %}
+  {% if cat_posts.size > 0 %}
+    <h3 class="archive__subtitle">
+      <a href="{{ category.url | relative_url }}">{{ category.display }}</a>
+    </h3>
+    <div class="entries-grid">
+      {% for post in cat_posts %}
+        {% include archive-single.html type="grid" %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}

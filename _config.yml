@@ -68,8 +68,8 @@ reCaptcha:
 atom_feed:
   path: # blank (default) uses feed.xml
   hide: true
-search: # true, false (default)
-search_full_content: # true, false (default)
+search: true # true, false (default)
+search_full_content: true # true, false (default)
 search_provider: # lunr (default), algolia, google
 lunr:
   search_within_pages: # true, false (default)
@@ -115,7 +115,7 @@ analytics:
 author:
   name: "김성근"
   avatar: # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio: "시니어가 되고 싶은 신입 프론트엔드 <br>개발자"
+  bio: "기술에 경계를 두지 않는 <br>개발자를 꿈꾸는 몽상가"
   location: "seoul"
   email: "tjdzms123@naver.com"
   # fediverse      : "@you@instance.social"  # used for fediverse:creator meta tag

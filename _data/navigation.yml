@@ -1,20 +1,15 @@
-# main links
+# main links (헤더에는 카테고리 대신 검색만 표시 — 카테고리는 사이드바에 있음)
 main:
-  # - title: "Quick-Start Guide"
-  #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "CS"
-    url: /cs/
-  - title: "JavaScript"
-    url: /js/
-  - title: "C#"
-    url: /csharp/
-  - title: "SQL"
-    url: /sql/
-  - title: "Windows"
-    url: /windows/
-  # - title: "Sample Posts"
-  #   url: /year-archive/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
+
+# sidebar nav
+sidebar-nav:
+  - title: "카테고리"
+    children:
+      - title: "CS"
+        url: /cs/
+      - title: "JavaScript"
+        url: /js/
+      - title: "SQL"
+        url: /sql/
+      - title: "Windows"
+        url: /windows/

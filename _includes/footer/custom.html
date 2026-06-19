@@ -1,3 +1,32 @@
 <!-- start custom footer snippets -->
 
+<!-- 맨 위로 가는 버튼: 일정 높이 이상 스크롤했을 때만 표시 -->
+<button type="button" id="back-to-top" class="back-to-top" aria-label="맨 위로" hidden>TOP</button>
+<script>
+  (function () {
+    var btn = document.getElementById("back-to-top");
+    if (!btn) return;
+
+    // 최상단이 아니면(약간이라도 내려가면) 버튼 노출
+    var THRESHOLD = 100;
+
+    function toggle() {
+      if (window.pageYOffset > THRESHOLD) {
+        btn.classList.add("is-visible");
+      } else {
+        btn.classList.remove("is-visible");
+      }
+    }
+
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", toggle, { passive: true });
+    window.addEventListener("resize", toggle);
+    btn.hidden = false; // JS 동작 시에만 노출(노스크립트 환경에선 숨김 유지)
+    toggle();
+  })();
+</script>
+
 <!-- end custom footer snippets -->

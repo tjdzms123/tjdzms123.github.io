@@ -1,60 +1,64 @@
 ---
 layout: default
 ---
-{%- assign locale = page.locale | default: layout.locale | default: site.locale %}
 
-{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
-  {% include page__hero.html locale=locale %}
-{% endif %}
-
-{% if page.url != "/" and site.breadcrumbs %}
-  {% unless paginator %}
-    {% include breadcrumbs.html locale=locale %}
-  {% endunless %}
-{% endif %}
+{%- assign locale = page.locale | default: layout.locale | default: site.locale
+%} {% if page.header.overlay_color or page.header.overlay_image or
+page.header.image %} {% include page__hero.html locale=locale %} {% endif %} {%
+if page.url != "/" and site.breadcrumbs %} {% unless paginator %} {% include
+breadcrumbs.html locale=locale %} {% endunless %} {% endif %}
 
 <div id="main" role="main">
   {% include sidebar.html locale=locale %}
 
   <div class="archive">
-    {% unless page.header.overlay_color or page.header.overlay_image %}
-      <h1 id="page-title" class="page__title"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>{{ page.title }}</h1>
-    {% endunless %}
-
-    {{ content }}
-
-    {%- assign search_provider = site.search_provider | default: "lunr" -%}
-    {%- case search_provider -%}
-      {%- when "lunr" -%}
-        <input type="text" id="search" class="search-input" placeholder="검색" />
-        <div id="results" class="results"></div>
-        <script>
-          // URL의 ?q= 값을 읽어 검색창에 채우고 검색을 자동 실행
-          window.addEventListener("load", function () {
-            var q = new URLSearchParams(window.location.search).get("q");
-            if (q) {
-              var headerInput = document.getElementById("masthead-search");
-              if (headerInput) { headerInput.value = q; }
-              var input = document.getElementById("search");
-              input.value = q;
-              if (window.jQuery) {
-                jQuery(input).trigger("keyup");
-              } else {
-                input.dispatchEvent(new Event("keyup"));
-              }
-            }
-          });
-        </script>
-      {%- when "google" -%}
-        <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
-        <input type="text" id="cse-search-input-box-id" class="search-input" placeholder="{{ site.data.ui-text[locale].search_placeholder_text | default: 'Enter your search term...' }}" />
-        </form>
-        <div id="results" class="results">
-          <gcse:searchresults-only></gcse:searchresults-only>
-        </div>
-      {%- when "algolia" -%}
-        <div class="search-searchbar"></div>
-        <div class="search-hits"></div>
+    {{ content }} {%- assign search_provider = site.search_provider | default:
+    "lunr" -%} {%- case search_provider -%} {%- when "lunr" -%}
+    <input
+      type="text"
+      id="search"
+      class="search-input"
+      placeholder="검색"
+      hidden
+    />
+    <div id="results" class="results"></div>
+    <script>
+      // URL의 ?q= 값을 읽어 검색창에 채우고 검색을 자동 실행
+      window.addEventListener("load", function () {
+        var q = new URLSearchParams(window.location.search).get("q");
+        if (q) {
+          var headerInput = document.getElementById("masthead-search");
+          if (headerInput) {
+            headerInput.value = q;
+          }
+          var input = document.getElementById("search");
+          input.value = q;
+          if (window.jQuery) {
+            jQuery(input).trigger("keyup");
+          } else {
+            input.dispatchEvent(new Event("keyup"));
+          }
+        }
+      });
+    </script>
+    {%- when "google" -%}
+    <form
+      onsubmit="return googleCustomSearchExecute();"
+      id="cse-search-box-form-id"
+    >
+      <input
+        type="text"
+        id="cse-search-input-box-id"
+        class="search-input"
+        placeholder="{{ site.data.ui-text[locale].search_placeholder_text | default: 'Enter your search term...' }}"
+      />
+    </form>
+    <div id="results" class="results">
+      <gcse:searchresults-only></gcse:searchresults-only>
+    </div>
+    {%- when "algolia" -%}
+    <div class="search-searchbar"></div>
+    <div class="search-hits"></div>
     {%- endcase -%}
   </div>
 </div>

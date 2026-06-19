@@ -1,37 +1,76 @@
-{% assign locale = include.locale | default: site.locale %}
-{% capture logo_path %}{{ site.logo }}{% endcapture %}
+{% assign locale = include.locale | default: site.locale %} {% capture logo_path
+%}{{ site.logo }}{% endcapture %}
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
         {% unless logo_path == empty %}
-          <a class="site-logo" href="{{ '/' | relative_url }}"><img src="{{ logo_path | relative_url }}" alt="{{ site.masthead_title | default: site.title }}"></a>
+        <a class="site-logo" href="{{ '/' | relative_url }}"
+          ><img
+            src="{{ logo_path | relative_url }}"
+            alt="{{ site.masthead_title | default: site.title }}"
+        /></a>
         {% endunless %}
         <a class="site-title" href="{{ '/' | relative_url }}">
           {{ site.masthead_title | default: site.title | escape_once | strip }}
-          {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
+          {% if site.subtitle %}<span class="site-subtitle"
+            >{{ site.subtitle | escape_once | strip }}</span
+          >{% endif %}
         </a>
         <ul class="visible-links">
           {%- for link in site.data.navigation.main -%}
-            <li class="masthead__menu-item">
-              <a
-                href="{{ link.url | relative_url }}"
-                {% if link.description %} title="{{ link.description }}"{% endif %}
-                {% if link.target %} target="{{ link.target }}"{% endif %}
-              >{{ link.title }}</a>
-            </li>
+          <li class="masthead__menu-item">
+            <a
+              href="{{ link.url | relative_url }}"
+              {%
+              if
+              link.description
+              %}
+              title="{{ link.description }}"
+              {%
+              endif
+              %}
+              {%
+              if
+              link.target
+              %}
+              target="{{ link.target }}"
+              {%
+              endif
+              %}
+              >{{ link.title }}</a
+            >
+          </li>
           {%- endfor -%}
         </ul>
         {% if site.search == true %}
-        <form class="masthead__search" role="search" method="get" action="{{ '/search/' | relative_url }}">
+        <form
+          class="masthead__search"
+          role="search"
+          method="get"
+          action="{{ '/search/' | relative_url }}"
+        >
           <i class="fas fa-search masthead__search-icon" aria-hidden="true"></i>
-          <label class="visually-hidden" for="masthead-search">{{ site.data.ui-text[locale].search_label | default: "검색" }}</label>
-          <input type="search" id="masthead-search" name="q" class="masthead__search-input" placeholder="검색" autocomplete="off" />
+          <label class="visually-hidden" for="masthead-search"
+            >{{ site.data.ui-text[locale].search_label | default: "검색"
+            }}</label
+          >
+          <input
+            type="search"
+            id="masthead-search"
+            name="q"
+            class="masthead__search-input"
+            placeholder="검색"
+            autocomplete="off"
+          />
         </form>
         {% endif %}
         <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">{{ site.data.ui-text[locale].menu_label | default: "Toggle menu" }}</span>
+          <span class="visually-hidden"
+            >{{ site.data.ui-text[locale].menu_label | default: "Toggle menu"
+            }}</span
+          >
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>

@@ -93,6 +93,11 @@ $sticky-offset: $nav-height + 3em;
   }
 }
 
+// 사이드바 카테고리 그룹 제목 아래 구분선 제거
+.nav__sub-title {
+  border-bottom: 0;
+}
+
 // 각 그리드가 자신의 float을 가두도록 clearfix
 .entries-grid {
   &::after {

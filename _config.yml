@@ -319,3 +319,13 @@ defaults:
       comments: # true
       share: true
       related: true
+      sidebar:
+        nav: "sidebar-nav" # 글 페이지에도 왼쪽 카테고리 사이드바 표시
+  # _pages (카테고리/검색 등 일반 페이지)
+  - scope:
+      path: ""
+      type: pages
+    values:
+      author_profile: true
+      sidebar:
+        nav: "sidebar-nav" # 모든 페이지에 왼쪽 카테고리 사이드바 표시

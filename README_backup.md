@@ -16,6 +16,10 @@ Minimal Mistakes는 개인 사이트, 블로그, 포트폴리오 제작에 최�
 
 ![레이아웃 예시](screenshot-layouts.png)
 
+## 로컬 실행 커멘드
+
+bundle exec jekyll serve
+
 ## 주요 기능
 
 - "테마 gem" 형태로 번들링되어 설치/업그레이드가 쉽습니다.
@@ -278,7 +282,3 @@ Lunr는 [MIT 라이선스](http://opensource.org/licenses/MIT) 조건 하에 배
 Minimal Mistakes는 [clipboard.js](https://clipboardjs.com/)를 포함합니다.
 Copyright (c) 2021 Zeno Rocha.
 Clipboard.js는 [MIT 라이선스](https://opensource.org/licenses/MIT) 조건 하에 배포됩니다.
-
-## 로컬 실행 커멘드
-
-bundle exec jekyll serve

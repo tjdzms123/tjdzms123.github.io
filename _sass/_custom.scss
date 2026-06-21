@@ -1,0 +1,200 @@
+/* ==========================================================================
+   사용자 커스텀 스타일
+   - main.scss에서 minimal-mistakes 임포트 이후 @import "custom" 으로 불러온다.
+   - front matter가 없어 SCSS 문법 검증이 정상 동작한다.
+   ========================================================================== */
+
+// 스크롤해도 헤더 고정
+.masthead {
+  position: sticky;
+  top: 0;
+  background-color: $background-color; // 본문이 비치지 않도록 배경 채움
+}
+
+// 고정 헤더 높이(nav 높이 + 상하 패딩 1em) + 여백
+$sticky-offset: $nav-height + 3em;
+
+// sticky 사이드바(작성자 프로필 / TOC)가 고정 헤더 뒤로 가려지지 않게 아래로 내림
+.sidebar.sticky,
+.sidebar__right.sticky,
+.sticky {
+  @include breakpoint($large) {
+    top: $sticky-offset;
+  }
+}
+
+// 헤더에 가려지는 만큼 사이드바 스크롤 영역 높이도 줄임
+.sidebar.sticky {
+  @include breakpoint($large) {
+    max-height: calc(100vh - #{$sticky-offset} - 1em);
+  }
+}
+
+// 검색 결과 페이지 입력창은 헤더 검색창으로 대체하므로 숨김
+// (.search-input { display:block } 이 hidden 속성을 덮으므로 id 선택자로 강제)
+#search.search-input {
+  display: none;
+}
+
+// 헤더 중앙 검색창
+#site-nav.greedy-nav {
+  position: relative; // 검색창 절대 위치 기준
+}
+
+.masthead__search {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5em; // 아이콘과 입력창 간격
+  margin: 0; // 기본 form 여백 제거
+  padding: 0; // 기본 form 패딩 제거
+  background-color: transparent; // 기본 form 배경 박스 제거
+
+  // 좁은 화면에선 중앙 고정 해제 (제목과 겹치지 않게)
+  @include breakpoint(max-width $small) {
+    position: static;
+    transform: none;
+    margin-inline-start: auto;
+  }
+}
+
+.masthead__search-icon {
+  font-size: 0.9em;
+  color: $muted-text-color;
+  pointer-events: none;
+}
+
+.masthead__search-input {
+  width: 300px;
+  max-width: 40vw;
+  margin-bottom: 0; // 기본 input 하단 여백 제거
+  padding: 0.45em 0.75em;
+  font-size: 0.8em;
+  color: $text-color;
+  background-color: transparent; // 배경 제거
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: none; // 기본 input 그림자 박스 제거
+  outline: none;
+
+  &:focus {
+    border-color: $primary-color;
+  }
+
+  &::placeholder {
+    color: $muted-text-color;
+  }
+}
+
+// 사이드바 카테고리 그룹 제목 아래 구분선 제거
+.nav__sub-title {
+  border-bottom: 0;
+}
+
+// 각 그리드가 자신의 float을 가두도록 clearfix (테마 기본 float 레이아웃용)
+.entries-grid {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  // large 이상: 카드 크기는 그대로 두고 오른쪽으로 한 칸(grid__item)만큼만 확장.
+  // .archive가 왼쪽에 고정돼 있으므로 너비를 125%로 키우면 왼쪽 끝은 그대로,
+  // 오른쪽으로만 25%(= 기존 4칸 기준 한 칸) 늘어나고 5등분되어 한 줄에 5개가 된다.
+  @include breakpoint($large) {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 1.5em;
+    row-gap: 2em;
+    width: 125%; // 기존 4칸(=100%) 대비 오른쪽으로 한 칸만큼 확장
+
+    &::after {
+      display: none; // 그리드에서는 clearfix가 빈 셀로 잡히므로 제거
+    }
+
+    // 테마 susy의 float·퍼센트 너비·마진을 풀어 그리드 셀에 맞춤
+    .grid__item {
+      float: none;
+      width: auto;
+      margin: 0;
+    }
+  }
+}
+
+// 섹션 제목은 항상 이전 그리드 아래에서 시작
+.archive__subtitle {
+  clear: both;
+
+  // 그리드를 오른쪽으로 한 칸 넓혔으므로 제목 밑줄도 같은 폭으로 맞춤
+  @include breakpoint($large) {
+    width: 125%;
+  }
+}
+
+// 그리드 아이템 제목 2줄 이상 말줄임
+.entries-grid .archive__item-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 그리드 아이템 본문 3줄 이상 말줄임
+.entries-grid .archive__item-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 맨 위로 가는 버튼 (우측 하단 고정, 스크롤 시에만 노출)
+.back-to-top {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  font-family: $sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #222; // 흰 배경과 대비되는 어두운 글자
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(#000, 0.35);
+  cursor: pointer;
+
+  // 기본 숨김 → .is-visible 일 때만 표시 (페이드 + 살짝 위로 이동)
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease,
+    background-color 0.2s ease, color 0.2s ease;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: $primary-color; // hover 시 강조색으로 변화
+    outline: none;
+  }
+
+  @include breakpoint(max-width $small) {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}

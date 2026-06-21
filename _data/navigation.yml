@@ -3,7 +3,7 @@ main:
 
 # sidebar nav
 sidebar-nav:
-  - title: "카테고리"
+  - title: "MENU"
     children:
       - title: "CS"
         url: /cs/

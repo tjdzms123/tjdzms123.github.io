@@ -122,6 +122,11 @@ $sticky-offset: $nav-height + 3em;
       width: auto;
       margin: 0;
     }
+
+    // 5열 그리드에서 최대 2줄(=10개)까지만 노출하고 이후 항목은 숨김
+    .grid__item:nth-child(n + 11) {
+      display: none;
+    }
   }
 }
 

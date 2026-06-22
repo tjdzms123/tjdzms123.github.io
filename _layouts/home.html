@@ -1,27 +1,23 @@
 ---
 layout: archive
 ---
-{%- assign locale = page.locale | default: layout.locale | default: site.locale %}
 
-{{ content }}
+{%- assign locale = page.locale | default: layout.locale | default: site.locale
+%} {{ content }}
 
 <h3 class="archive__subtitle">최신글</h3>
 <div class="entries-grid">
-  {% for post in site.posts limit:6 %}
-    {% include archive-single.html type="grid" %}
-  {% endfor %}
+  {% for post in site.posts limit:10 %} {% include archive-single.html
+  type="grid" %} {% endfor %}
 </div>
 
-{% for category in site.data.categories %}
-  {% assign cat_posts = site.categories[category.slug] %}
-  {% if cat_posts.size > 0 %}
-    <h3 class="archive__subtitle">
-      <a href="{{ category.url | relative_url }}">{{ category.display }}</a>
-    </h3>
-    <div class="entries-grid">
-      {% for post in cat_posts %}
-        {% include archive-single.html type="grid" %}
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endfor %}
+{% for category in site.data.categories %} {% assign cat_posts =
+site.categories[category.slug] %} {% if cat_posts.size > 0 %}
+<h3 class="archive__subtitle">
+  <a href="{{ category.url | relative_url }}">{{ category.display }}</a>
+</h3>
+<div class="entries-grid">
+  {% for post in cat_posts %} {% include archive-single.html type="grid" %} {%
+  endfor %}
+</div>
+{% endif %} {% endfor %}

@@ -9,6 +9,8 @@ sidebar-nav:
         url: /cs/
       - title: "JavaScript"
         url: /js/
+      - title: "CSS"
+        url: /css/
       - title: "SQL"
         url: /sql/
       - title: "Windows"

@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "CSS position 속성 사용법"
-categories: [JS]
+categories: [CSS]
 date: 2023-06-02
 ---
 

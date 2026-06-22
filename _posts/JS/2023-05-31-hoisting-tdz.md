@@ -15,6 +15,8 @@ date: 2023-05-31
 
 `let`, `const`로 선언한 변수도 호이스팅되지만, TDZ에 머무는 동안에는 접근할 수 없어 참조 시 `ReferenceError`가 발생합니다.
 
+![TDZ 구간 설명](/assets/images/JS/TDZ.png)
+
 ```js
 console.log(a); // ReferenceError: Cannot access 'a' before initialization (TDZ 구간)
 let a = 10;

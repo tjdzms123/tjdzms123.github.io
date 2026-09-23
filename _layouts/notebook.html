@@ -1,0 +1,70 @@
+---
+---
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% include seo.html locale="ko-KR" %}
+  {% include head/custom.html %}
+  <script>
+    (function () {
+      var theme = new URLSearchParams(location.search).get('theme');
+      try { theme = theme || localStorage.getItem('blog-theme'); } catch (_) {}
+      document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ '/assets/css/archive-syntax.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="{{ '/assets/archive.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <script src="{{ '/assets/archive.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+  {% for script in site.head_scripts %}<script src="{{ script | relative_url }}"></script>{% endfor %}
+</head>
+<body class="archive-theme"{% if page.layout == 'search' %} data-search-page{% endif %}>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  {% assign active_category = page.category | default: page.categories.first %}
+  <aside class="identity-rail">
+    <div>
+      <a class="home-title" href="{{ '/' | relative_url }}" aria-label="{{ site.title | escape }} 홈"><span>나의</span><h1>개발일지</h1></a>
+      <p class="rail-bio">{{ site.author.bio }}</p>
+      <div class="rail-author">{{ site.author.name }} <span>{{ site.author.location | capitalize }}</span></div>
+    </div>
+    <nav class="rail-topics" aria-label="글 주제 선택">
+      <h2>글 찾아보기</h2>
+      <div class="topic-buttons">
+        <a class="topic-link" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>전체<span>{{ site.posts.size }}</span></a>
+        {% for category in site.data.categories %}
+          <a class="topic-link" href="{{ category.url | relative_url }}"{% if active_category == category.slug %} aria-current="page"{% endif %}>{{ category.display }}<span>{{ site.categories[category.slug].size | default: 0 }}</span></a>
+        {% endfor %}
+      </div>
+    </nav>
+    <div class="rail-bottom">
+      <p>배운 개념과 해결한 문제를<br>이곳에 기록합니다.</p>
+      <div class="footer-links">
+        {% for link in site.author.links %}{% if link.url %}<a href="{{ link.url | escape }}" target="_blank" rel="noopener">{{ link.label }}</a>{% endif %}{% endfor %}
+        <a href="mailto:{{ site.author.email | escape }}">Email</a>
+      </div>
+    </div>
+  </aside>
+  <main id="main">
+    <header class="archive-bar">
+      <span>개념을 모으고, 이해를 쌓다.</span>
+      <form action="{{ '/search/' | relative_url }}" method="get" role="search">
+        <label class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span class="sr-only">글 검색</span><input type="search" name="q" data-search placeholder="검색">
+        </label>
+      </form>
+      <nav class="theme-switch" aria-label="화면 테마">
+        <a href="?theme=light" data-theme-link="light">라이트</a>
+        <a href="?theme=dark" data-theme-link="dark">다크</a>
+      </nav>
+    </header>
+    {{ content }}
+    <footer><span>© {{ site.footer.since | default: '2023' }}–{{ site.time | date: '%Y' }} {{ site.author.name }}</span></footer>
+  </main>
+  {% include footer/custom.html %}
+  {% include analytics.html %}
+  {% include comments-providers/scripts.html locale="ko-KR" %}
+  {% for script in site.after_footer_scripts %}<script src="{{ script | relative_url }}"></script>{% endfor %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+---
+search: false
+---
+
+.archive-theme {
+  --syntax-red: #f07178;
+  --syntax-orange: #f78c6c;
+  --syntax-yellow: #ffcb6b;
+  --syntax-green: #c3e88d;
+  --syntax-cyan: #89ddff;
+  --syntax-blue: #82aaff;
+  --syntax-purple: #c792ea;
+}
+
+html[data-theme="light"] .archive-theme {
+  --syntax-red: #a32d3b;
+  --syntax-orange: #944315;
+  --syntax-yellow: #735710;
+  --syntax-green: #3f641d;
+  --syntax-cyan: #176575;
+  --syntax-blue: #305a9f;
+  --syntax-purple: #78429b;
+}
+
+// 기존 Rouge 규칙을 재사용하고 색상만 현재 테마에 맞춥니다.
+$base04: var(--muted);
+$base05: var(--ink);
+$base06: var(--selection-bg);
+$base08: var(--syntax-red);
+$base09: var(--syntax-orange);
+$base0a: var(--syntax-yellow);
+$base0b: var(--syntax-green);
+$base0c: var(--syntax-cyan);
+$base0d: var(--syntax-blue);
+$base0e: var(--syntax-purple);
+
+@import "minimal-mistakes/syntax-tokens";

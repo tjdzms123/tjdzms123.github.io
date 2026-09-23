@@ -1,0 +1,20 @@
+<section class="record-archive" id="archive">
+  <div class="records-heading">
+    <h2>{% if page.layout == 'search' %}검색 결과{% elsif page.category %}{{ page.title }} 기록{% else %}전체 기록{% endif %}</h2>
+    <span data-count class="result-count" aria-live="polite">{{ include.posts.size | default: 0 }}개의 글</span>
+  </div>
+  <div class="column-guide" aria-hidden="true"><span>기록한 날</span><span>제목</span><span>주제</span></div>
+  <div class="record-list" data-post-list>
+    {% for post in include.posts %}
+      {% assign topic = site.data.categories | where: 'slug', post.categories.first | first %}
+      <article class="record-row"{% if page.layout == 'search' %} data-search-text="{{ post.title | escape }} {{ topic.display | escape }} {{ post.categories | join: ' ' | escape }} {{ post.content | markdownify | strip_html | normalize_whitespace | escape }}"{% endif %}>
+        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y.%m.%d' }}</time>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+        <span class="post-category">{{ topic.display | default: post.categories.first | escape }}</span>
+        {% if page.layout == 'search' %}<p class="record-summary">{{ post.excerpt | strip_html | normalize_whitespace | truncate: 160 | escape }}</p>{% endif %}
+      </article>
+    {% endfor %}
+  </div>
+  <p class="empty-message" data-empty{% if include.posts.size > 0 %} hidden{% endif %}>아직 찾을 수 있는 기록이 없습니다.<br>다른 단어나 주제로 다시 찾아보세요.</p>
+  <button class="load-more" data-more type="button" hidden>이전 기록 더 보기 <span aria-hidden="true">+</span></button>
+</section>

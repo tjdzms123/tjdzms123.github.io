@@ -1,23 +1,16 @@
 ---
-layout: archive
+layout: notebook
 ---
-
-{%- assign locale = page.locale | default: layout.locale | default: site.locale
-%} {{ content }}
-
-<h3 class="archive__subtitle">최신글</h3>
-<div class="entries-grid">
-  {% for post in site.posts limit:10 %} {% include archive-single.html
-  type="grid" %} {% endfor %}
-</div>
-
-{% for category in site.data.categories %} {% assign cat_posts =
-site.categories[category.slug] %} {% if cat_posts.size > 0 %}
-<h3 class="archive__subtitle">
-  <a href="{{ category.url | relative_url }}">{{ category.display }}</a>
-</h3>
-<div class="entries-grid">
-  {% for post in cat_posts %} {% include archive-single.html type="grid" %} {%
-  endfor %}
-</div>
-{% endif %} {% endfor %}
+{% assign records = site.posts %}
+{% if page.category %}{% assign records = site.categories[page.category] %}{% endif %}
+{% if page.category or page.layout == 'search' %}
+<section class="view-intro">
+  <a href="{{ '/' | relative_url }}">전체 기록으로</a>
+  <h1 data-search-heading>{{ page.title }}</h1>
+  <p>{% if page.layout == 'search' %}제목과 본문에서 기록을 찾아보세요.{% else %}같은 주제의 기록을 최신순으로 모았습니다.{% endif %}</p>
+</section>
+{% else %}
+  {% include archive-shelf.html %}
+{% endif %}
+{{ content }}
+{% include archive-records.html posts=records %}

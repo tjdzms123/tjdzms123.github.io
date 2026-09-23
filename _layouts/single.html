@@ -1,87 +1,35 @@
 ---
-layout: default
+layout: notebook
 ---
-{%- assign locale = page.locale | default: layout.locale | default: site.locale %}
-
-{% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
-  {% include page__hero.html locale=locale %}
-{% elsif page.header.video.id and page.header.video.provider %}
-  {% include page__hero_video.html %}
-{% endif %}
-
-{% assign breadcrumbs_enabled = site.breadcrumbs %}
-{% if page.breadcrumbs != null %}
-  {% assign breadcrumbs_enabled = page.breadcrumbs %}
-{% endif %}
-{% if page.url != "/" and breadcrumbs_enabled %}
-  {% unless paginator %}
-    {% include breadcrumbs.html locale=locale %}
-  {% endunless %}
-{% endif %}
-
-<div id="main" role="main">
-  {% include sidebar.html locale=locale %}
-
-  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>
-    {% if page.title %}<meta itemprop="headline" content="{{ page.title | replace: '|', '&#124;' | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
-    {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
-    {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{% endif %}
-    {% if page.last_modified_at %}<meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
-
-    <div class="page__inner-wrap">
-      {% unless page.header.overlay_color or page.header.overlay_image %}
-        <header>
-          {% if page.title -%}
-          <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="{{ page.url | absolute_url }}" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
-          </h1>
-          {%- endif %}
-        </header>
-      {% endunless %}
-
-      <section class="page__content e-content" itemprop="text">
-        {% if page.toc %}
-          <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %}">
-            <nav class="toc" aria-label="Table of contents">
-              <header><h4 class="nav__title"><i class="fas fa-{{ page.toc_icon | default: 'file-alt' }}"></i> {{ page.toc_label | default: site.data.ui-text[locale].toc_label | default: "On this page" }}</h4></header>
-              {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}
-            </nav>
-          </aside>
-        {% endif %}
-        {{ content }}
-        {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
+{% assign topic = site.data.categories | where: 'slug', page.categories.first | first %}
+<section class="post-heading">
+  <nav aria-label="글 경로"><a href="{{ '/' | relative_url }}">전체 기록</a>{% if topic %}<span>/</span><a href="{{ topic.url | relative_url }}">{{ topic.display }}</a>{% endif %}</nav>
+  <h1>{{ page.title | escape }}</h1>
+  <p>{{ site.author.name }}{% if page.date %}<span>·</span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>{% endif %}{% if page.last_modified_at %}<span>·</span>수정 {{ page.last_modified_at | date: '%Y.%m.%d' }}{% endif %}</p>
+</section>
+<div class="reading-layout">
+  <article class="post-content">
+    {{ content }}
+    {% if page.tags.size > 0 %}<p class="post-tags">{{ page.tags | join: ' · ' | escape }}</p>{% endif %}
+    <nav class="post-end" aria-label="목록으로 이동">
+      {% if topic %}<a href="{{ topic.url | relative_url }}">{{ topic.display }} 글 더 보기</a>{% endif %}<a href="{{ '/' | relative_url }}">전체 기록으로</a>
+    </nav>
+    {% if page.share %}{% include social-share.html locale="ko-KR" %}{% endif %}
+    <nav class="post-end" aria-label="이전 글과 다음 글">
+      {% if page.previous %}<a href="{{ page.previous.url | relative_url }}">이전 글 · {{ page.previous.title | escape }}</a>{% endif %}
+      {% if page.next %}<a href="{{ page.next.url | relative_url }}">다음 글 · {{ page.next.title | escape }}</a>{% endif %}
+    </nav>
+    {% if page.related %}
+      <section class="related-records"><h2>함께 읽을 기록</h2>
+        {% assign related = site.related_posts | where_exp: 'post', 'post.hidden != true' %}
+        {% for post in related limit:3 %}<p><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></p>{% endfor %}
       </section>
-
-      <footer class="page__meta">
-        {% if site.data.ui-text[locale].meta_label %}
-          <h4 class="page__meta-title">{{ site.data.ui-text[locale].meta_label }}</h4>
-        {% endif %}
-        {% include page__taxonomy.html locale=locale %}
-        {% include page__date.html locale=locale %}
-      </footer>
-
-      {% if page.share %}{% include social-share.html locale=locale %}{% endif %}
-
-      {% include post_pagination.html locale=locale %}
-    </div>
-
-    {% if site.comments.provider and page.comments %}
-      {% if jekyll.environment == 'production' %}
-        {% include comments.html locale=locale %}
-      {% else %}
-        <p>
-          Comments are configured with provider: <strong>{{ site.comments.provider }}</strong>,
-          but are disabled in non-production environments.
-        </p>
-      {% endif %}
     {% endif %}
+    {% if site.comments.provider and page.comments %}{% include comments.html locale="ko-KR" %}{% endif %}
   </article>
-
-  {% comment %}<!-- only show related on a post page when `related: true` -->{% endcomment %}
-  {% if page.id and page.related and site.related_posts.size > 0 %}
-    {% include page__related.html locale=locale posts=site.related_posts %}
-  {% comment %}<!-- otherwise show recent posts if no related when `related: true` -->{% endcomment %}
-  {% elsif page.id and page.related %}
-    {% include page__related.html locale=locale posts=site.posts %}
-  {% endif %}
+  {% unless page.toc == false %}
+    {% capture article_toc %}{% include toc.html html=content sanitize=true h_min=2 h_max=3 skip_no_ids=true %}{% endcapture %}
+    {% assign toc_text = article_toc | strip %}
+    {% if toc_text != '' %}<aside class="post-toc"><nav aria-label="이 글의 목차"><h2>이 글에서</h2>{{ article_toc }}</nav></aside>{% endif %}
+  {% endunless %}
 </div>

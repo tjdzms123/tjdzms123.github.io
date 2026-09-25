@@ -7,6 +7,10 @@ sidebar-nav:
     children:
       - title: "CS"
         url: /cs/
+      - title: "C#"
+        url: /csharp/
+      - title: "AI"
+        url: /ai/
       - title: "JavaScript"
         url: /js/
       - title: "CSS"
